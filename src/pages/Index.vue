@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { remote } from 'electron'
 // import MonacoEditor from 'monaco-editor-vue'
 import EditorContainer from '@/components/EditorContainer'
 
@@ -35,7 +34,6 @@ export default {
     }
   },
   mounted () {
-    console.log('size:', remote.getCurrentWindow().getSize())
   }
 }
 </script>

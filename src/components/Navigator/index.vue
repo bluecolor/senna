@@ -20,7 +20,7 @@ export default {
   },
   data () {
     return {
-      isConnection: true
+      isConnection: false
     }
   }
 }
@@ -32,6 +32,7 @@ export default {
   .nav-bar {
     padding-right:5px;
     padding-left:5px;
+    min-height: 37px;
   }
 }
 

@@ -1,7 +1,7 @@
 <template lang="pug">
 q-tabs(v-model='tab', align='left', active-color='primary')
   q-tab.editor-tab(
-    v-for='tabId in tabs', :key='tabId', :name='tabId' style='padding-right:3px;')
+    v-for='tabId in tabs', :key='tabId', :name='tabId')
     div
       | Tab {{tabId}}
       q-btn.z-max.q-ml-md.all-pointer-events.close-btn(
@@ -28,6 +28,8 @@ export default {
 
 <style lang="scss">
 .editor-tab {
+  min-height: 37px;
+  padding-right:3px;
   .close-btn {
     visibility: hidden;
     transition: visibility 0s;

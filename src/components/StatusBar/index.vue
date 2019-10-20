@@ -1,5 +1,5 @@
 <template lang="pug">
-q-bar.bg-grey-8.text-white.status-bar(dense='')
+q-bar.bg-grey-8.text-white.status-bar(dense style='height:25px;')
   q-icon(name='fas fa-signal')
   div mobi-net
   div 4G

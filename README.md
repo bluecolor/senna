@@ -1,4 +1,4 @@
-# Blue (blue)
+# Senna (senna)
 
 Oracle SQL Client
 
