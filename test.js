@@ -1,0 +1,1 @@
+oracledbCLib = require('oracledb')

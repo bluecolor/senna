@@ -1,0 +1,22 @@
+{
+  "connections": [
+    {
+      "id": "gxBS3rWM",
+      "name": "asdas21as",
+      "host": "localhost",
+      "port": 1530,
+      "username": "fstest",
+      "password": "fstest",
+      "database": "orcl"
+    },
+    {
+      "id": "Zu7Hn2Kd",
+      "name": "asdasd",
+      "host": "localhost",
+      "port": 1530,
+      "username": "fstest",
+      "password": "fstest",
+      "database": "orcl"
+    }
+  ]
+}
