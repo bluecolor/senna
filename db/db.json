@@ -1,8 +1,18 @@
 {
   "connections": [
     {
-      "id": "gxBS3rWM",
-      "name": "asdas21as",
+      "id": "KD9muK1j",
+      "name": "2asdas",
+      "host": "localhost",
+      "port": 1530,
+      "username": "fstest",
+      "password": "fstest",
+      "database": "orcl",
+      "lazy": true
+    },
+    {
+      "id": "njUJuV2p",
+      "name": "Copy of 2asdas",
       "host": "localhost",
       "port": 1530,
       "username": "fstest",
@@ -10,8 +20,8 @@
       "database": "orcl"
     },
     {
-      "id": "Zu7Hn2Kd",
-      "name": "asdasd",
+      "id": "a8-IVd57",
+      "name": "Copy of Copy of 2asdas",
       "host": "localhost",
       "port": 1530,
       "username": "fstest",

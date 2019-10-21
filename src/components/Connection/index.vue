@@ -1,6 +1,6 @@
 <template lang="pug">
 q-dialog(
-  v-model='visible' persistent='', transition-show='flip-down', transition-hide='flip-up' @close='onClose')
+  v-model='visible' persistent='',  transition-hide='flip-up' @close='onClose')
   q-card(style='min-height: 50vh; min-width: 60vh;')
     q-bar.bg-primary.text-white
       div Connection
@@ -28,6 +28,7 @@ q-dialog(
         q-input(dense outlined v-model="username" label="Username" )
         q-input(type='password' dense outlined v-model="password" label="Password" )
     q-card-actions(align="right")
+      q-btn(dense, flat color="primary" @click='onClose') Close
       q-btn(dense, flat color="primary" @click='onTest') Test
       q-btn(dense, flat color="primary" :loading='isSaveLoading' @click='onSave' ) Save
 </template>
@@ -91,24 +92,42 @@ export default {
       const payload = {
         id: this.id, name, host, port, database, username, password
       }
-      if (this.id) {
-        this.onUpdate(payload)
-      } else {
-        this.onCreate(payload)
+      try {
+        if (this.id) {
+          this.onUpdate(payload)
+        } else {
+          this.onCreate(payload)
+        }
+      } catch (e) {
+        this.isError = true
+        this.errorMessage = e.message
+        console.log(e.message)
       }
+
       this.isSaveLoading = false
     },
     onCreate (payload) {
       this.create(payload)
+      this.onClose()
     },
     onUpdate (payload) {
-
+      this.update(payload)
+      this.onClose()
     },
     onDisMiss () {
       this.isError = this.isSuccess = false
     },
     onClose () {
       this.$emit('close')
+    },
+    load (connection) {
+      this.id = connection.id
+      this.name = connection.name
+      this.host = connection.host
+      this.port = connection.port
+      this.database = connection.database
+      this.username = connection.username
+      this.password = connection.username
     }
   }
 }

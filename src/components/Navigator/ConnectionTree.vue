@@ -1,6 +1,16 @@
 <template lang='pug'>
 .q-gutter-sm(@contextmenu="onContextMenu($event)")
+  q-dialog(v-model='isConfirm', persistent)
+    q-card(style='min-width:50vh;')
+      q-card-section.row.items-center()
+        q-avatar(icon='delete', color='red-4', text-color='white')
+        span.q-ml-sm Delete connection ?
+      q-card-actions(align='right')
+        q-btn(flat, label='No', color='primary', v-close-popup)
+        q-btn(flat, label='Yes', color='primary', v-close-popup @click='onDelete')
+
   q-tree(
+        no-nodes-label=' '
         :selected.sync="selected"
         :ticked.sync="ticked"
         :expanded.sync="expanded"
@@ -11,7 +21,7 @@
         node-key="id"
         label-key='name'
         @lazy-load="onLazyLoad")
-  connection-context-menu
+  connection-context-menu(@select='onContextMenuSelect')
 
 </template>
 
@@ -28,6 +38,8 @@ export default {
   },
   data () {
     return {
+      isConfirm: false,
+      contextMenuTarget: undefined,
       selected: '',
       ticked: [],
       expanded: []
@@ -46,17 +58,49 @@ export default {
   },
   methods: {
     ...mapActions('connection', [
-      'findAll'
+      'findAll', 'destroy', 'create'
     ]),
+    onContextMenuSelect (command) {
+      switch (command) {
+        case 'delete': this.isConfirm = true; break
+        case 'edit': this.onEditConnection(); break
+        case 'duplicate': this.onDuplicateConnection(); break
+      }
+    },
     onContextMenu (e) {
-      console.log(e)
+      this.contextMenuTarget = e.target.innerText
     },
     onLazyLoad () {
+    },
+    onDelete () {
+      const { id } = _.find(this.connections, { name: this.contextMenuTarget })
+      this.destroy(id)
+    },
+    onEditConnection () {
+      const connection = _.find(this.connections, { name: this.contextMenuTarget })
+      this.$emit('edit-connection', connection)
+    },
+    onDuplicateConnection () {
+      let connection = _.chain(this.connections)
+        .find({ name: this.contextMenuTarget })
+        .cloneDeep()
+        .value()
+
+      const makeName = (name) => {
+        let c = _.find(this.connections, { name })
+        if (c === undefined) {
+          return name
+        } else {
+          return makeName(`Copy of ${name}`)
+        }
+      }
+
+      connection.name = makeName(`Copy of ${connection.name}`)
+      this.create(connection)
     }
   },
   mounted () {
     this.findAll()
-    console.log(this.connections)
   }
 }
 </script>
