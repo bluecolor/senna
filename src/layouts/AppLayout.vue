@@ -6,35 +6,55 @@ q-layout(view='lHh Lpr lFf')
     q-btn(dense, flat, round, icon='lens', size='8.5px', color='green' @click='onMinimize')
     q-btn(dense, flat, round, icon='lens', size='8.5px', color='yellow' @click='onMaximize')
     q-btn(dense, flat, round, icon='lens', size='8.5px', color='red' @click='onClose')
-
   .page-container
-    activity-bar(@toggle='onToggleNavigator' style='height:100%;' :style="`height: ${splitHeight}px`")
-    q-splitter.splitter(:limits="[0, 90]" v-model='splitter' :style="`height: ${splitHeight}px`")
-      template(v-slot:before)
-        navigator
-      template(v-slot:after)
-        q-page-container
-          router-view
+    activity-bar(
+      @hide-navigator='onHideNavigator'
+      @show-navigator='onShowNavigator'
+      style='height:100%;' :style="`height: ${splitHeight}px`")
+    .content-container
+      exception(v-if='isException', @close='isException=false' :exception='exception')
+      loading(v-if='isLoading')
+      welcome(v-if='openConnections.length === 0' :style="`height: ${splitHeight}px`")
+      q-splitter.splitter(
+        v-for='c in openConnections'
+        v-if= 'c.id === activeConnection'
+        :limits="[0, 90]" v-model='splitter' :style="`height: ${splitHeight}px`"
+      )
+        template(v-slot:before)
+          navigator
+        template(v-slot:after)
+          q-page-container
   status-bar
 
 </template>
 
 <script>
 import _ from 'lodash'
+import { mapGetters, mapActions } from 'vuex'
 import { remote } from 'electron'
 import Navigator from '@/components/Navigator'
 import StatusBar from '@/components/StatusBar'
 import ActivityBar from '@/components/ActivityBar'
+import Welcome from './Welcome'
+import Loading from '@/components/Loading'
+import { EventBus } from '@/util/event-bus.js'
+import Exception from '@/components/Exception'
 
 export default {
   name: 'AppLayout',
   components: {
     Navigator,
     StatusBar,
-    ActivityBar
+    ActivityBar,
+    Welcome,
+    Loading,
+    Exception
   },
   data () {
     return {
+      exception: 'Unknown exception occured',
+      isException: false,
+      isLoading: false,
       isMaximized: false,
       splitHeight: 300,
       splitterPrev: 0,
@@ -43,8 +63,14 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('app', [
+      'activeConnection', 'openConnections'
+    ])
   },
   methods: {
+    ...mapActions('connection', {
+      'findAllConnections': 'findAll'
+    }),
     onClose () {
       remote.getCurrentWindow().close()
     },
@@ -64,20 +90,27 @@ export default {
       const winHeight = remote.getCurrentWindow().getSize()[1]
       this.splitHeight = winHeight - 55
     },
-    onToggleNavigator () {
-      if (this.splitter === 0) {
-        this.splitter = this.splitterPrev
-      } else {
-        this.splitterPrev = this.splitter
-        this.splitter = 0
-      }
+    onHideNavigator () {
+      this.splitterPrev = this.splitter
+      this.splitter = 0
+    },
+    onShowNavigator () {
+      this.splitter = this.splitterPrev
     }
   },
   mounted () {
+    this.findAllConnections()
     this.computeSplitHeight()
     remote.getCurrentWindow().on('resize', _.debounce(() => {
       this.computeSplitHeight()
     }, 20))
+    EventBus.$on('loading', loading => {
+      this.isLoading = loading
+    })
+    EventBus.$on('exception', e => {
+      this.exception = e.message
+      this.isException = true
+    })
   }
 }
 </script>
@@ -87,10 +120,15 @@ button {
   -webkit-app-region: no-drag;
 }
 
+.content-container {
+  width: 100%;
+}
+
 .page-container {
   display: flex;
   .splitter {
     flex-grow: 1;
   }
 }
+
 </style>

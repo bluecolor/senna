@@ -58,16 +58,15 @@ module.exports = function (ctx) {
         'QForm',
         'QField',
         'QSelect',
-        'QTree'
+        'QTree',
+        'QDrawer',
+        'QLinearProgress'
       ],
       directives: [],
 
       // Quasar plugins
       plugins: [
-        // new MonacoWebpackPlugin({
-        //   // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-        //   languages: ['javascript']
-        // })
+        'Notify'
       ]
     },
 

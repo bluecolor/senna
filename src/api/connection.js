@@ -22,6 +22,14 @@ export default {
       return { success: false, error }
     }
   },
+  async connect ({ username, password, host, port, database }) {
+    let connection = await oracledb.getConnection({
+      user: username,
+      password: password,
+      connectString: `${host}:${port}/${database}`
+    })
+    return connection
+  },
   create ({ name, host, port, username, password, database, serviceSid }) {
     const id = shortid.generate()
     const data = { id, name, host, port, username, password, database, serviceSid }

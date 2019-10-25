@@ -13,13 +13,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 // import MonacoEditor from 'monaco-editor-vue'
 import EditorContainer from '@/components/EditorContainer'
 
 export default {
   name: 'PageIndex',
   components: {
-    // MonacoEditor,
     EditorContainer
   },
   data () {
@@ -29,11 +29,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions('connection', {
+      'findAllConnections': 'findAll'
+    }),
     onChange (value) {
-      console.log(value)
     }
   },
   mounted () {
+    this.findAllConnections()
   }
 }
 </script>

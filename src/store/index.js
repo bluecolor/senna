@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import app from './modules/app'
 import connection from './modules/connection'
 
 Vue.use(Vuex)
@@ -13,6 +14,7 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
+      app,
       connection
     },
 

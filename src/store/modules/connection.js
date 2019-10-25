@@ -5,6 +5,8 @@ const CREATE = 'CREATE'
 const SET_ALL = 'SET_ALL'
 const DESTROY = 'DESTROY'
 const UPDATE = 'UPDATE'
+const CONNECT = 'CONNECT'
+const DISCONNECT = 'DISCONNECT'
 
 const state = {
   connections: []
@@ -34,6 +36,18 @@ const actions = {
     api.destroy(id)
     commit(DESTROY, id)
     return id
+  },
+  async connect ({ commit, dispatch, state }, id) {
+    const connection = _.find(state.connections, { id })
+    try {
+      const c = await api.connect(connection)
+      console.log('connected')
+      commit(CONNECT, id, c)
+    } catch (e) {
+      console.log('exception')
+      throw e
+    }
+    // dispatch('app/openConnection', connection, { root: true })
   }
 }
 
@@ -52,6 +66,14 @@ const mutations = {
     const { id } = data
     const i = _.findIndex(state.connections, { id })
     state.connections.splice(i, 1, data)
+  },
+  [CONNECT] (state, id, c) {
+    let connection = _.find(state.connections, { id })
+    connection['connection'] = c
+  },
+  [DISCONNECT] (state, id) {
+    let connection = _.find(state.connections, { id })
+    connection['connection'] = undefined
   }
 }
 

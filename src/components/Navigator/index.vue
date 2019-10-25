@@ -1,21 +1,30 @@
 <template lang="pug">
 .navigator-container
-  connection(v-if='isConnection' @close='isConnection=false' ref='connection')
   q-bar.bg-grey-8.nav-bar
-    q-btn(dense round flat icon='add' size='10.5px' color='white' @click='isConnection=true')
-    q-btn(dense round flat icon='refresh' size='10.5px' color='white' @click='isConnection=true')
+    q-btn.q-mr-sm(dense round flat icon='refresh' size='10.5px' color='white')
+    q-btn.q-mr-sm(dense round flat icon='tab' size='10.5px' color='white')
+    q-btn(color='white' icon='add' dense size='10.5px' flat round)
+      q-menu(anchor="bottom right")
+        q-list(dense style='min-width: 200px')
+          q-item(clickable, v-close-popup)
+            q-item-section New Tab
+          q-separator
+          q-item(clickable, v-close-popup)
+            q-item-section New Table
+          q-item(clickable, v-close-popup)
+            q-item-section New User
+
     q-space
-  connection-tree(@edit-connection='onEditConnection')
+  connection-tree()
 </template>
 
 <script>
-import Connection from '@/components/Connection'
+
 import ConnectionTree from './ConnectionTree'
 import ActivityBar from '@/components/ActivityBar'
 
 export default {
   components: {
-    Connection,
     ConnectionTree,
     ActivityBar
   },
@@ -25,15 +34,6 @@ export default {
     }
   },
   methods: {
-    onEditConnection (connection) {
-      this.isConnection = true
-      setTimeout(() => {
-        this.$refs['connection'].load(connection)
-      }, 20)
-    },
-    onToggleContent () {
-      this.$emit('toggle')
-    }
   }
 }
 </script>
