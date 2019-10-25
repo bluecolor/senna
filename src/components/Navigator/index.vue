@@ -13,8 +13,9 @@
             q-item-section New Table
           q-item(clickable, v-close-popup)
             q-item-section New User
-
     q-space
+    q-btn(color='white' icon='more_vert' dense size='10.5px' flat round)
+
   connection-tree()
 </template>
 
@@ -43,8 +44,8 @@ export default {
 .navigator-container {
   height: 100%;
   .nav-bar {
-    padding-right:5px;
-    padding-left:5px;
+    padding-right:10px;
+    padding-left:10px;
     min-height: 37px;
   }
 }

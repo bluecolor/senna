@@ -24,6 +24,7 @@ q-layout(view='lHh Lpr lFf')
           navigator
         template(v-slot:after)
           q-page-container
+            editor-container
   status-bar
 
 </template>
@@ -39,6 +40,7 @@ import Welcome from './Welcome'
 import Loading from '@/components/Loading'
 import { EventBus } from '@/util/event-bus.js'
 import Exception from '@/components/Exception'
+import EditorContainer from '@/components/EditorContainer'
 
 export default {
   name: 'AppLayout',
@@ -48,7 +50,8 @@ export default {
     ActivityBar,
     Welcome,
     Loading,
-    Exception
+    Exception,
+    EditorContainer
   },
   data () {
     return {
