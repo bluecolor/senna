@@ -4,7 +4,7 @@ const shortid = require('shortid')
 import { db } from './db'
 
 const isNameUnique = (name, id) => {
-  const connection = db.get('connections').find({ name })
+  const connection = db.get('connections').find({ name }).value()
   return _.isEmpty(connection) || connection.id === id
 }
 

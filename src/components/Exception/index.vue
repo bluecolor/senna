@@ -1,6 +1,6 @@
 <template lang="pug">
 q-dialog(v-model='visible' persistent)
-  q-card(style='width:500px; height:200px;')
+  q-card()
     q-bar.bg-red-8
       div.text-white Exception
       q-space
@@ -8,7 +8,7 @@ q-dialog(v-model='visible' persistent)
         q-tooltip
           | Copy message
       q-btn(round dense, flat, icon='close', @click='onClose' color='white')
-    q-card-section
+    q-card-section(style='width:500px; height:200px;')
       | {{ exception }}
 </template>
 

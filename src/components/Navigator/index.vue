@@ -22,12 +22,10 @@
 <script>
 
 import ConnectionTree from './ConnectionTree'
-import ActivityBar from '@/components/ActivityBar'
 
 export default {
   components: {
-    ConnectionTree,
-    ActivityBar
+    ConnectionTree
   },
   data () {
     return {

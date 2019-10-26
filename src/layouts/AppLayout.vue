@@ -18,7 +18,8 @@ q-layout(view='lHh Lpr lFf')
       q-splitter.splitter(
         v-for='c in openConnections'
         v-if= 'c.id === activeConnection'
-        :limits="[0, 90]" v-model='splitter' :style="`height: ${splitHeight}px`"
+        :limits="[0, 90]"
+        v-model='splitter' :style="`height: ${splitHeight}px`"
       )
         template(v-slot:before)
           navigator

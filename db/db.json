@@ -4,9 +4,9 @@
       "id": "KD9muK1j",
       "name": "2asdas",
       "host": "localhost",
-      "port": 1530,
-      "username": "fstest",
-      "password": "fstest",
+      "port": "1521",
+      "username": "senna",
+      "password": "senna",
       "database": "orcl",
       "lazy": true
     },

@@ -9,7 +9,7 @@
         q-btn.z-max.q-ml-md.all-pointer-events.close-btn(
           flat round, dense, size='xs', color='negative', icon='close', @click.stop='removeTab(t)')
   q-tab-panels.tab-panels(v-model='tab')
-    q-tab-panel(v-for='t in tabs' :name="tab")
+    q-tab-panel.tab-panel(v-for='t in tabs' :name="tab")
       editor-tab-content
 
 </template>
@@ -38,3 +38,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tab-panel {
+  padding: 0 !important;
+}
+</style>
