@@ -12,7 +12,7 @@
         :width="editorWidth"
         :height="editorHeight"
         theme="vs"
-        language="javascript"
+        language="sql"
         :options="options"
       )
     template(v-slot:after)

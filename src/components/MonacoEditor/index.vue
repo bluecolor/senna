@@ -22,7 +22,7 @@ export default {
     height: { type: [String, Number], default: '100%' },
     original: String,
     value: String,
-    language: { type: String, default: 'javascript' },
+    language: { type: String, default: 'sql' },
     theme: { type: String, default: 'vs' },
     options: {
       type: Object,
@@ -93,8 +93,39 @@ export default {
         theme: theme,
         ...options
       })
+      this._registerCompletionItemProvider()
       this.diffEditor && this._setModel(this.value, this.original)
       this._editorMounted(this.editor)
+    },
+    _createDependencyProposals () {
+        // returning a static list of proposals, not even looking at the prefix (filtering is done by the Monaco editor),
+        // here you could do a server side lookup
+        return [
+          {
+            label: '"select"',
+            kind: monaco.languages.CompletionItemKind.Function,
+            documentation: "Select keyword",
+            insertText: 'select'
+          },
+          {
+            label: '"from"',
+            kind: monaco.languages.CompletionItemKind.Function,
+            documentation: "From keyword",
+            insertText: 'from'
+          }
+        ]
+    },
+    _registerCompletionItemProvider () {
+      monaco.languages.registerCompletionItemProvider('sql', {
+        provideCompletionItems: (model, position) => {
+          // find out if we are completing a property in the 'dependencies' object.
+          var textUntilPosition = model.getValueInRange({startLineNumber: 1, startColumn: 1, endLineNumber: position.lineNumber, endColumn: position.column});
+          var suggestions =  this._createDependencyProposals()
+          return {
+            suggestions: suggestions
+          }
+        }
+      })
     },
     _getEditor () {
       if (!this.editor) return null

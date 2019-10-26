@@ -8,7 +8,7 @@
         | Tab {{t}}
         q-btn.z-max.q-ml-md.all-pointer-events.close-btn(
           flat round, dense, size='xs', color='negative', icon='close', @click.stop='removeTab(t)')
-  editor-tab-content()
+  editor-tab-content
 
 </template>
 
@@ -30,9 +30,6 @@ export default {
     }
   },
   watch: {
-    tab () {
-      console.log(this.tab)
-    }
   },
   methods: {
     removeTab (id) {
