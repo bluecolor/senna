@@ -8,9 +8,7 @@
         | Tab {{t}}
         q-btn.z-max.q-ml-md.all-pointer-events.close-btn(
           flat round, dense, size='xs', color='negative', icon='close', @click.stop='removeTab(t)')
-  q-tab-panels.tab-panels(v-model='tab')
-    q-tab-panel.tab-panel(v-for='t in tabs' :name="tab")
-      editor-tab-content
+  editor-tab-content()
 
 </template>
 
@@ -28,7 +26,12 @@ export default {
     return {
       version: 'Quasar.version',
       tab: 1,
-      tabs: [1]
+      tabs: [1, 2]
+    }
+  },
+  watch: {
+    tab () {
+      console.log(this.tab)
     }
   },
   methods: {

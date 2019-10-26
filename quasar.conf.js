@@ -2,6 +2,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 var path = require('path')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = function (ctx) {
   return {
@@ -86,6 +87,10 @@ module.exports = function (ctx) {
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
 
       extendWebpack (cfg) {
+        cfg.plugins.push(
+          new MonacoWebpackPlugin()
+        )
+
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

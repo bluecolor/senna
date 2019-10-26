@@ -9,25 +9,24 @@
   )
     template(v-slot:before style='overflow-y: hidden; overflow-x: hidden;')
       monaco-editor(
-        :width="editorWidth-300"
+        :width="editorWidth"
         :height="editorHeight"
-        theme="vs-dark"
+        theme="vs"
         language="javascript"
         :options="options"
       )
     template(v-slot:after)
-      output-container(@minimize='onMinimizeOutputContainer')
+      output-container(@minimize='onMinimizeOutputContainer' :id='id')
 </template>
 
 <script>
 import _ from 'lodash'
 import { remote } from 'electron'
 import OutputContainer from './OutputContainer'
-import MonacoEditor from 'monaco-editor-vue'
-// import * as ResizeObserver from 'resize-observer-polyfill'
+import MonacoEditor from '@/components/MonacoEditor'
 
 export default {
-  props: {},
+  props: { id: { type: Number } },
   components: {
     MonacoEditor,
     OutputContainer
@@ -69,7 +68,6 @@ export default {
         const rect = entry.contentRect
         this.editorWidth = rect.width
         this.editorHeight = rect.height
-        console.log(this.editorWidth, this.editorHeight)
       }
     })
     observer.observe(el)
