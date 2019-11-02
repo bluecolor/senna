@@ -12,11 +12,11 @@ q-tab.editor-tab(:name='id')
 export default {
   name: 'EditorTab',
   props: {
-    id: { type: Number }
+    id: { type: String },
+    title: { type: String }
   },
   data () {
     return {
-      title: 'New tab'
     }
   },
   methods: {

@@ -23,7 +23,7 @@ export default {
     ...mapActions('connection', [
       'connect'
     ]),
-    ...mapActions('app', [
+    ...mapActions('editor', [
       'openConnection'
     ]),
     async onConnection ({ id }) {

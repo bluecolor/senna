@@ -14,10 +14,10 @@ q-layout(view='lHh Lpr lFf')
     .content-container
       exception(v-if='isException', @close='isException=false' :exception='exception')
       loading(v-if='isLoading')
-      welcome(v-if='openConnections.length === 0' :style="`height: ${splitHeight}px`")
+      welcome(v-if='connections.length === 0' :style="`height: ${splitHeight}px`")
       q-splitter.splitter(
-        v-for='c in openConnections'
-        v-if= 'c.id === activeConnection'
+        v-for='c in connections'
+        v-if= 'c.active'
         :limits="[0, 90]"
         v-model='splitter' :style="`height: ${splitHeight}px`"
       )
@@ -67,8 +67,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('app', [
-      'activeConnection', 'openConnections'
+    ...mapGetters('editor', [
+      'activeConnection', 'connections'
     ])
   },
   methods: {
@@ -135,4 +135,10 @@ button {
   }
 }
 
+</style>
+
+<style>
+  body {
+    overflow: hidden;
+  }
 </style>
